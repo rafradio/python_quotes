@@ -5,7 +5,7 @@ import createDataFromFile as create
 
 def main(args):
     projectId, users, myURL = create.createData(args[1])
-    print("start - ", projectId, users[0])
+    print("start - ", projectId, users)
     dt = takeData.TakeData(myURL)
     # dBase = dbConnectSQL.DbConnectSQL()
     
