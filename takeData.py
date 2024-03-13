@@ -7,6 +7,7 @@ class TakeData(db.DbConnectSQL):
     def __init__(self, myURL) -> None:
         super().__init__()
         self.url = myURL
+        self.insertingData =[]
         # self.url = "https://api.alchemer.com/v5/survey/7740515/quotas?api_token=59907c039d7a83a104f6623e125381a64bc6614dd55618be5d&api_token_secret=A9m4.LEiwlUjM"
         # r = requests.get(self.url, headers={'content-type': 'application/json; charset=UTF-8'})
         r = requests.get(self.url)
@@ -16,7 +17,6 @@ class TakeData(db.DbConnectSQL):
         print(type(self.data['quotas'][3]))
             
     def createData(self, projectId, users):
-        self.insertingData =[]
         for user in users:
             for line in self.data['quotas']:
                 # string = unicodedata.normalize("NFKD", line['name'])
