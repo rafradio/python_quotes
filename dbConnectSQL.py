@@ -36,8 +36,16 @@ class DbConnectSQL:
             val = "%" + str(u) + "%"
             sql = "SELECT id FROM users WHERE email LIKE '" + val + "'"
             self.mycursor.execute(sql)
-            row = [item[0] for item in self.mycursor.fetchall()]
+            rowdata = self.mycursor.fetchall()
+            # print(len(rowdata))
+            if len(rowdata) == 0:
+                sql = "SELECT id FROM users WHERE users.name LIKE '" + val + "'"
+                self.mycursor.execute(sql)
+                row = [item[0] for item in self.mycursor.fetchall()]
+            else:
+                row = [item[0] for item in rowdata]
             resData.append(row)
-        print(",".join([str(x) for xs in resData for x in xs]))
+        print("Печатаем данные в колличестве - ", len(resData))
+        for el in [str(x) for xs in resData for x in xs]: print(el)
         return resData
         
