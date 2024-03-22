@@ -8,13 +8,17 @@ class TakeData(db.DbConnectSQL):
         super().__init__()
         self.url = myURL
         self.insertingData =[]
-        # self.url = "https://api.alchemer.com/v5/survey/7740515/quotas?api_token=59907c039d7a83a104f6623e125381a64bc6614dd55618be5d&api_token_secret=A9m4.LEiwlUjM"
+        self.data = None
         # r = requests.get(self.url, headers={'content-type': 'application/json; charset=UTF-8'})
+        
+    def sentRequest(self):
         r = requests.get(self.url)
-        self.data = r.json()
-        # print(self.data)
-        print(len(self.data['quotas']))
-        print(type(self.data['quotas'][3]))
+        print(r.ok)
+        if r.ok: 
+            self.data = r.json()
+            print(len(self.data['quotas']))
+            return True
+        else: return False
             
     def createData(self, projectId, users):
         for user in users:
@@ -29,10 +33,6 @@ class TakeData(db.DbConnectSQL):
         print("Длина - ", i)    
         
     def writeToFile(self):
-        # for line in self.insertingData:
-        #     delim = ";"
-        #     res = delim.join([str(ele) for ele in line])
-        #     print(res)
         with open("myfile.txt", "w") as file1:
             for line in self.insertingData:
                 delim = ";"
