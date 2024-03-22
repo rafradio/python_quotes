@@ -8,17 +8,14 @@ def main(args):
     print("start - ", projectId, users)
     dt = takeData.TakeData(myURL)
     # dBase = dbConnectSQL.DbConnectSQL()
-    
-    # dt.takeKeys()
-    dt.createData(projectId, users)
-    # dt.checkData()
-    # dt.insertData()
-    # dt.writeToFile()
-    # dt.makeSQLInsert()
-    print(dt.insertingData)
-    print(len(dt.insertingData))
-    # print(dt.mydb)
-    dt.makeSQLInsert(dt.insertingData)
+    if dt.sentRequest(): 
+        print(dt.data)
+        dt.createData(projectId, users)
+
+        print(dt.insertingData)
+        print(len(dt.insertingData))
+        dt.makeSQLInsert(dt.insertingData)
+    else: print("Данных в запросе нет")
     # dBase.makeSQLInsert(dt.insertingData)
 
 if __name__ == "__main__":
