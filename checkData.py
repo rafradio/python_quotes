@@ -3,10 +3,10 @@ import dbConnectSQL
 
 def main(args):
     db = dbConnectSQL.DbConnectSQL()
-    with open('users.txt') as f:
+    with open('users.txt', encoding="utf-8") as f:
         data = [line.rstrip() for line in f]
         
-    print(data)
+    print("Кол-во необходимых пользователей - ", len(data))
     db.checkSQLUsers(data)
 
 if __name__ == "__main__":
