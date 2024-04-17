@@ -16,8 +16,10 @@ def main(args):
                     attempt += 1
                 
         index += 1
+        checkEmailSpelling(data)
+        
+def checkEmailSpelling(data):
     index = 1
-    
     for str in data:
         if str.rfind("@") > -1:
             str = str.replace('"', '')
