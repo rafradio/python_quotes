@@ -1,6 +1,8 @@
 import requests
 import unicodedata
 import dbConnectSQL as db
+from urllib3.util.retry import Retry
+from requests.adapters import HTTPAdapter
 # import mysql.connector
 
 class TakeData(db.DbConnectSQL):
@@ -12,10 +14,19 @@ class TakeData(db.DbConnectSQL):
         # r = requests.get(self.url, headers={'content-type': 'application/json; charset=UTF-8'})
         
     def sentRequest(self):
-        r = requests.get(self.url)
+        session = requests.Session()
+        retries = Retry(total=5,
+                backoff_factor=0.3,
+                status_forcelist=[500, 502, 503, 504],
+                allowed_methods=frozenset(['GET', 'POST']))
+        session.mount('http://', HTTPAdapter(max_retries=retries))
+        session.mount('https://', HTTPAdapter(max_retries=retries))
+        r = session.get(self.url)
+        # r = requests.get(self.url)
         print(r.ok)
         if r.ok: 
             self.data = r.json()
+            # print(self.data.keys())
             print(len(self.data['quotas']))
             return True
         else: return False
