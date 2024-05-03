@@ -4,7 +4,7 @@ import csv
 
 def addreses():
     data = []
-    with open('dataCoor.csv', encoding="utf-8-sig", mode ='r') as f:
+    with open('dataCoor2.csv', encoding="utf-8-sig", mode ='r') as f:
         csvFile = csv.reader(f, delimiter  = ';', quotechar=None)
         for lines in csvFile:
             print(lines)
@@ -27,12 +27,13 @@ def fetch_coordinates(args, addresesList):
         if r.ok: 
             data = r.json()
             # print(data['response']['GeoObjectCollection']['featureMember'][0]['GeoObject'].keys())
-            print(data['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['Point'])
-            coordinates.append((addr[0], data['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['Point']))
+            print(data['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['metaDataProperty']['GeocoderMetaData']['Address']['Components'][2])
+            # coordinates.append((addr[0], data['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['Point']))
+            coordinates.append((addr[0], data['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['metaDataProperty']['GeocoderMetaData']['Address']['Components'][2]))
             
-    with open("coordinares.txt", "w") as file1:
+    with open("coordinares1.txt" , encoding="utf-8-sig", mode ="w") as file1:
         for line in coordinates:
-            file1.writelines(line[0] + "; " + line[1]['pos'] + "\n")
+            file1.writelines(line[0] + "; " + line[1]['name'] + "\n")
             
     
 if __name__ == "__main__":
