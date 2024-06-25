@@ -29,7 +29,8 @@ for i in range(len(dataset)-1):
         rowdata = db.mycursor.fetchall()
         # print(str1)
         if len(rowdata) != 0:
-            if rowdata[0] == 'elmag': print(str1, ' ', rowdata[0])
+            if rowdata[0] == 'chkl': print(str1, ' ', rowdata[0])
+        if len(rowdata) == 0: print(str1)
         checkSet = list(filter(lambda x: str(x).find(str1) != -1, dataset[4]))
         if len(checkSet) > 0: print(el)
     # for j in range(len(dataset[i])):
