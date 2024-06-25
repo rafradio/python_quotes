@@ -2,10 +2,13 @@ import pandas as pd
 import openpyxl
 import time
 import dbConnectSQL
+import os
+from dotenv import load_dotenv, dotenv_values 
 
 start = time.time()
 dataframe = openpyxl.load_workbook("testxls.xlsm")
 db = dbConnectSQL.DbConnectSQL("config1.txt")
+load_dotenv()
 
 dataframe1 = dataframe.active
 mydata = []
@@ -29,7 +32,7 @@ for i in range(len(dataset)-1):
         rowdata = db.mycursor.fetchall()
         # print(str1)
         if len(rowdata) != 0:
-            if rowdata[0] == 'chkl': print(str1, ' ', rowdata[0])
+            if rowdata[0] == os.getenv('pass'): print(str1, ' ', rowdata[0])
         if len(rowdata) == 0: print(str1)
         checkSet = list(filter(lambda x: str(x).find(str1) != -1, dataset[4]))
         if len(checkSet) > 0: print(el)
